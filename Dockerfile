@@ -3,7 +3,7 @@ MAINTAINER Ravi Pandya <ravipandya1229@gmail.com>
 
 RUN \
 	apt-get update && \
-	apt-get -y install build-essential git ruby1.9.3 && \
-	gem install github-pages therubyracer --no-ri --no-rdoc
+	apt-get -y install build-essential ruby-dev && \
+	gem install jekyll bundler --no-ri --no-rdoc
 
-EXPOSE 8124
+EXPOSE 4000

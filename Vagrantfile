@@ -1,9 +1,24 @@
-Vagrant::Config.run do |config|
 
-  config.vm.box = "geerlingguy/ubuntu1604"
-  config.vm.forward_port 8124, 8124
-  config.vm.provision :shell,
-    :inline => "sudo apt-get update && sudo apt-get -y install build-essential git ruby2.3 && sudo gem install github-pages therubyracer --no-ri --no-rdoc"
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-  config.ssh.forward_agent = true
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+	config.vm.box = "geerlingguy/ubuntu1604"
+	
+	# Setup port forwarding  
+	config.vm.network :forwarded_port, guest: 4000, host: 4000, auto_correct: false
+
+    # VM specific configs
+    config.vm.provider "virtualbox" do |v|
+    	v.name = "jekyll"
+    	v.memory = 1024
+    	v.cpus = 2
+    end
+
+    # Shell provisioning
+    config.vm.provision "shell" do |s|
+    	s.path = "provision/setup.sh"
+    end
 end
